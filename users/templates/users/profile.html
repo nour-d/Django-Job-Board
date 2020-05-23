@@ -1,0 +1,56 @@
+{% extends 'website/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="jumbotron text-center bg-info text-light">
+    <h1 class="display-4 mt-5">{{user.first_name}} Profile</h1>
+</div>
+
+{% include 'website/alert.html' %}
+
+<div class="container text-secondary">
+    <h4 class="text-center">
+        Posted Jobs
+    </h4>
+    <div class="mt-4">
+        <table class="table text-muted">
+            <thead>
+                <tr>
+                    <th scope="col">Position</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Date Posted</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for job in jobs %}
+            {% if job.company == user %}
+                <tr>
+                    <td>{{job.position}}</td>
+                    <td>{{job.location}}</td>
+                    <td>{{job.date_posted|date:"F d, Y"}}</td>
+                    <td>
+                        <a class="btn btn-info" href="{% url 'jobs-update' job.id %}">Edit</a>
+                        <a class="btn btn-danger" href="{% url 'jobs-delete' job.id %}">Delete</a>
+                    </td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h4 class="text-center mt-5">
+        Update Information
+    </h4>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {{u_form|crispy}}
+            {{p_form|crispy}}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Update</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

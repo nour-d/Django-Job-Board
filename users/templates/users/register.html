@@ -1,0 +1,26 @@
+{% extends 'website/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="jumbotron text-center bg-info text-light">
+    <h1 class="display-4 mt-5">Create An Account For Your Company</h1>
+</div>
+
+{% include 'website/alert.html' %}
+
+<div class="container p-5">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"></legend>
+            {{form|crispy}}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Sign Up</button>
+        </div>
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">Already have an account? <a class="ml-2" href="{% url 'login' %}">Sign In</a></small>
+    </div>
+</div>
+{% endblock content %}

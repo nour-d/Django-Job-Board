@@ -1,0 +1,47 @@
+{% extends 'website/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="jumbotron text-center bg-info text-light">
+    <h1 class="display-4 mt-5">{{jobs.0.company.profile.user.first_name}} Jobs</h1>
+</div>
+
+{% include 'website/alert.html' %}
+
+<div class="container text-secondary">
+    <h4 class="text-center">
+        Posted Jobs
+    </h4>
+    <div class="mt-4">
+        {% if jobs %}
+        {% for job in jobs %}
+        <div class="container border p-3 mt-3">
+          <h2><a class="text-info" href="{% url 'jobs-detail' job.id %}">{{job.position}}</a></h2>
+          <small class="text-muted">{{job.location}}</small>
+          <p class="text-muted float-right">Posted on {{job.date_posted|date:"F d, Y"}}</p>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="container p-3 mt-3">
+            This company has not posted any jobs yet. Check back soon!
+        </div>
+        {% endif %}
+    </div>
+    {% if jobs.0.company.profile.user.email or jobs.0.company.profile.bio %}
+    <h4 class="text-center mt-5">
+        About This Company
+    </h4>
+    <div class="mt-4">
+        <p>
+            <!--access first item using .0-->
+            {{jobs.0.company.profile.bio}}
+        </p>
+        {% if jobs.0.company.profile.user.email %}
+        <p>
+            Interested in working for this company? Contact them at: {{jobs.0.company.profile.user.email}}
+        </p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

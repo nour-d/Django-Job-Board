@@ -1,0 +1,24 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center bg-info text-light">
+    <h1 class="display-4" style="margin-top:10rem">Django Job Board</h1>
+    <p class="lead mt-3 mb-5">
+        Browse our list of amazing, dream jobs.
+    </p>
+    <p class="lead">
+        <a class="btn btn-outline-light btn-lg mt-5" href="#" role="button">Post a Job!</a>
+    </p>
+</div>
+
+{% include 'website/alert.html' %}
+
+<div class="container p-3 mt-3">
+    <h2>{{object.position}}</h2>
+    <p>Company: {{object.company.profile.user.first_name}}</p>
+    <p>Location: {{object.location}}</p>
+    <p class="text-muted">Posted on {{object.date_posted|date:"F d, Y"}}</p>
+    <p>{{object.requirement}}</p>
+    <a class="btn btn-info" href="{{object.apply_link}}" target="_blank">Apply Now!</a>
+</div>
+{% endblock content %}

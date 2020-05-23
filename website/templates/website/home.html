@@ -1,0 +1,47 @@
+{% extends 'website/base.html' %}
+
+{% block content %}
+<div class="jumbotron text-center bg-info text-light">
+  <h1 class="display-4" style="margin-top:10rem">Django Job Board</h1>
+  <p class="lead mt-3 mb-5">
+    Browse our list of dream jobs.
+  </p>
+  <p class="lead">
+    <a class="btn btn-outline-light btn-lg mt-5" href="{% url 'jobs-create' %}" role="button">Post a Job!</a>
+  </p>
+</div>
+
+{% include 'website/alert.html' %}
+
+{% for job in jobs %}
+<div class="container border p-3 mt-3">
+  <p><a class="text-info" href="{% url 'company-jobs' job.company %}">{{job.company.profile.user.first_name}}</a></p>
+  <h2><a class="text-info" href="{% url 'jobs-detail' job.id %}">{{job.position}}</a></h2>
+  <small class="text-muted">{{job.location}}</small>
+  <p class="text-muted float-right">Posted on {{job.date_posted|date:"F d, Y"}}</p>
+</div>
+{% endfor %}
+<div class="container text-center mt-5">
+  {% if is_paginated %}
+  {% if page_obj.has_previous %}
+  <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+  <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+  {% endif %}
+
+  {% for num in page_obj.paginator.page_range %}
+  {% if page_obj.number == num %}
+  <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+  {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+  <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+  {% endif %}
+  {% endfor %}
+
+  {% if page_obj.has_next %}
+  <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+  <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+  {% endif %}
+  {% endif %}
+
+</div>
+
+{% endblock content %}

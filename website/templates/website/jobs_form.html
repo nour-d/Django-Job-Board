@@ -1,0 +1,22 @@
+{% extends 'website/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="jumbotron text-center bg-info text-light">
+    <h1 class="display-4 mt-5">Post A Job For Your Company</h1>
+</div>
+
+{% include 'website/alert.html' %}
+
+<div class="container p-5">
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {{form|crispy}}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Post</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
