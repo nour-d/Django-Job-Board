@@ -17,10 +17,21 @@
         </fieldset>
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Login</button>
+            <span class="m-2">or you can --> </span>
+            <button class="btn btn-info" onclick="guestLogin()">Login As Guest</button>
         </div>
     </form>
     <div class="border-top pt-3">
         <small class="text-muted">Need an account? <a class="ml-2" href="{% url 'register' %}">Sign Up</a></small>
     </div>
 </div>
+<!--for demonstration purposes only, guest login not intended as part of final application.-->
+<script>
+    let userName = document.getElementById("id_username");
+    let passWord = document.getElementById("id_password")
+    function guestLogin() {
+        userName.value="Guest";
+        passWord.value="MyGuest321";
+    }
+</script>
 {% endblock content %}
